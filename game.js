@@ -46,6 +46,8 @@ function preload() {
     }
   )
 
+  this.load.audio('main-theme', 'assets/sound/music/overworld/theme.mp3')
+
   this.load.audio('gameover', 'assets/sound/music/gameover.mp3')
 }
 
@@ -88,6 +90,10 @@ function create() {
   createAnimations(this)
 
   this.keys = this.input.keyboard.createCursorKeys()
+
+  this.bgMusic = this.sound.add('main-theme', { volume: 0.2 });
+  this.bgMusic.loop = true;
+  this.bgMusic.play();
 }
 
 function update() {
@@ -116,6 +122,7 @@ function update() {
     this.mario.anims.play('mario-dead', true)
     this.mario.setCollideWorldBounds(false)
     // this.sound.play('gameover')
+    this.bgMusic.stop();
     this.sound.add('gameover', { volume: 0.2 }).play()
 
     setTimeout(() => {
@@ -124,6 +131,7 @@ function update() {
 
     setTimeout(() => {
       this.scene.restart()
+      this.bgMusic.play();
     }, 2000)
   }
 }
